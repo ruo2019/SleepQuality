@@ -33,14 +33,14 @@ class SleepTrackerViewModel(val database: SleepDatabaseDao, application: Applica
         initializeTonight()
     }
 
-    fun initializeTonight() {
+    private fun initializeTonight() {
         viewModelScope.launch {
             tonight.value = getTonightFromDatabase()
         }
     }
 
     private suspend fun getTonightFromDatabase(): SleepNight? {
-        var night = database.getTonight()
+        val night = database.getTonight()
         if (night!!.startTimeMilli!=night.endTimeMilli) {
             return null
         }

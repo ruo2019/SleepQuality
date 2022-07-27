@@ -18,45 +18,13 @@ package com.example.android.trackmysleepquality.sleeptracker
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
-import com.example.android.trackmysleepquality.database.SleepNight
-import kotlinx.coroutines.launch
 
 /**
  * ViewModel for SleepTrackerFragment.
  */
-class SleepTrackerViewModel(val database: SleepDatabaseDao, application: Application) : AndroidViewModel(application) {
-    private var tonight = MutableLiveData<SleepNight?>()
-    init {
-        initializeTonight()
-    }
-
-    private fun initializeTonight() {
-        viewModelScope.launch {
-            tonight.value = getTonightFromDatabase()
-        }
-    }
-
-    private suspend fun getTonightFromDatabase(): SleepNight? {
-        val night = database.getTonight()
-        if (night!!.startTimeMilli!=night.endTimeMilli) {
-            return null
-        }
-        return night
-    }
-
-    fun onStartTracking() {
-        viewModelScope.launch {
-            var night = SleepNight()
-            insert(night)
-            tonight.value = getTonightFromDatabase()
-        }
-    }
-
-    private suspend fun insert(night: SleepNight) {
-        database.insert(night)
-    }
+class SleepTrackerViewModel(
+        val database: SleepDatabaseDao,
+        application: Application) : AndroidViewModel(application) {
 }
 

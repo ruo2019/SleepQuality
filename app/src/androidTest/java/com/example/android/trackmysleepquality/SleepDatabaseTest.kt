@@ -68,44 +68,6 @@ class SleepDatabaseTest {
         val tonight = sleepDao.getTonight()
         assertEquals(tonight?.sleepQuality, -1)
     }
-
-    @Test
-    @Throws(Exception::class)
-    fun updateAndGetNight() {
-        val night = SleepNight()
-        sleepDao.update(night)
-        val tonight = sleepDao.getTonight()
-        assertEquals(tonight?.sleepQuality, null)
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun getNight() {
-        val list = sleepDao.getAllNights().value ?: listOf(SleepNight())
-        val night = list.random()
-        val tonight = sleepDao.get(night.nightId)
-        assertEquals(tonight?.sleepQuality, null)
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun clearNights() {
-        sleepDao.clear()
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun getTonight() {
-        val tonight = sleepDao.getTonight()
-        assertEquals(tonight?.sleepQuality, null)
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun getAllNights() {
-        val night = sleepDao.getAllNights()
-        assertEquals(night, night)
-    }
 }
 
 
